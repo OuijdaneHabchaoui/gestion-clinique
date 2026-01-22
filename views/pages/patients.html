@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Patients - Clinique WS</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css?v=2026">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Styles spécifiques pour la modale */
+
+        /* Styles spécifiques pour la modale - Supprimés pour dashboard.css */
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-light);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i class="fas fa-heartbeat"></i></div>
+                <h1>Clinique WS</h1>
+            </div>
+            <nav class="sidebar-menu" id="sidebarMenu">
+                <!-- Menu généré par JS -->
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="btnLogout" class="menu-item"><i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span></a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h2>Gestion des Patients</h2>
+                </div>
+                <div class="user-nav">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="headerAvatar">U</div>
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">...</span>
+                            <span class="user-role" id="headerUserRole">...</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div id="alertMessage" class="hidden"></div>
+
+                <!-- Actions Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <button class="btn btn-primary" id="btnAddPatient">
+                        <i class="fas fa-plus mr-sm"></i> Nouveau Patient
+                    </button>
+
+                    <div class="search-bar" style="width: 300px; margin-bottom: 0;">
+                        <i class="fas fa-search text-muted"></i>
+                        <input type="text" id="searchInput" placeholder="Rechercher un patient...">
+                    </div>
+                </div>
+
+                <!-- Tableau des Patients -->
+                <div class="card-section">
+                    <div class="section-content p-0">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Email</th>
+                                    <th>Téléphone</th>
+                                    <th>Groupe Sanguin</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientsTableBody">
+                                <!-- Rempli par JS -->
+                                <tr>
+                                    <td colspan="5" class="text-center py-xl">Chargement...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Ajout/Modification -->
+    <div class="modal" id="patientModal" style="display: none;">
+        <div class="modal-content" style="max-height: 85vh; overflow-y: auto;">
+            <div class="section-header mb-xl">
+                <h3 id="modalTitle">Nouveau Patient</h3>
+                <button class="btn-icon" id="btnCloseModal"><i class="fas fa-times"></i></button>
+            </div>
+
+            <form id="patientForm">
+                <input type="hidden" name="id" id="patientId">
+
+                <div class="grid grid-2 gap-md mb-md">
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="nom" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prénom</label>
+                        <input type="text" name="prenom" class="form-input" required>
+                    </div>
+                </div>
+
+                <div class="form-group mb-md">
+                    <label class="form-label">Email (Connexion)</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group mb-md">
+                    <label class="form-label">Mot de passe (par défaut)</label>
+                    <input type="password" name="password" class="form-input">
+                </div>
+
+                <div class="grid grid-2 gap-md mb-md">
+                    <div class="form-group">
+                        <label class="form-label">Date de Naissance</label>
+                        <input type="date" name="date_naissance" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Téléphone</label>
+                        <input type="tel" name="telephone" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group mb-md">
+                    <label class="form-label">Adresse</label>
+                    <input type="text" name="adresse" class="form-input">
+                </div>
+
+                <div class="form-group mb-xl">
+                    <label class="form-label">Groupe Sanguin</label>
+                    <select name="groupe_sanguin" class="form-input">
+                        <option value="">Sélectionner...</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-white-outline mr-sm" id="btnCancel">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/services/ApiService.js?v=2"></script>
+    <script src="../assets/js/controllers/PatientsController.js?v=2"></script>
+    <script>
+        const controller = new PatientsController();
+        controller.init();
+    </script>
+</body>
+
+</html>

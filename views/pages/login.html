@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Clinique WS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            25% {
+                transform: translate(2%, 2%) rotate(1deg);
+            }
+
+            50% {
+                transform: translate(-1%, 3%) rotate(-1deg);
+            }
+
+            75% {
+                transform: translate(-2%, 1%) rotate(1deg);
+            }
+        }
+
+        /* Main Container */
+        .login-container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            min-height: 600px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Left Panel - Branding */
+        .login-branding {
+            flex: 1;
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-branding::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .login-branding::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        .brand-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        .brand-logo {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .brand-content p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .brand-features {
+            list-style: none;
+        }
+
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .brand-features li i {
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Right Panel - Form */
+        .login-form-panel {
+            flex: 1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+        }
+
+        .form-input:focus+i,
+        .input-wrapper:focus-within i {
+            color: #0ea5e9;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #0ea5e9;
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-link:hover {
+            color: #38bdf8;
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+        }
+
+        .form-footer a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .form-footer a:hover {
+            color: #38bdf8;
+        }
+
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .back-home:hover {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                max-width: 480px;
+            }
+
+            .login-branding {
+                padding: 40px 30px;
+            }
+
+            .brand-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .brand-features {
+                display: none;
+            }
+
+            .login-form-panel {
+                padding: 40px 30px;
+            }
+        }
+
+        /* Styles pour les messages d'alerte (succès/erreur) */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            text-align: center;
+            display: block;
+            /* Visible par défaut quand la classe est ajoutée */
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: transparent;
+            color: white;
+            /* Texte blanc demandé */
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        /* Couleur de l'icône dans l'alerte succès */
+        .alert-success i {
+            color: white;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Branding Panel -->
+        <div class="login-branding">
+            <div class="brand-content">
+                <div class="brand-logo">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h1>Clinique WS</h1>
+                <p>Votre santé, notre priorité. Accédez à votre espace personnel pour gérer vos rendez-vous médicaux.
+                </p>
+
+                <ul class="brand-features">
+                    <li><i class="fas fa-check"></i> Prise de rendez-vous en ligne 24h/7j</li>
+
+                    <li><i class="fas fa-check"></i> Suivi personnalisé</li>
+                    <li><i class="fas fa-check"></i> Rappels automatiques</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Form Panel -->
+        <div class="login-form-panel">
+            <div class="form-header">
+                <h2>Connexion</h2>
+                <p>Entrez vos identifiants pour accéder à votre espace</p>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label>Adresse email</label>
+                    <div class="input-wrapper">
+                        <input type="email" class="form-input" id="email" name="email" placeholder="exemple@email.com"
+                            required>
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <div class="input-wrapper">
+                        <input type="password" class="form-input" id="password" name="password" placeholder="••••••••"
+                            required>
+                        <i class="fas fa-lock"></i>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        Se souvenir de moi
+                    </label>
+                    <a href="#" class="forgot-link" id="forgotPasswordLink"
+                        onclick="alert('Veuillez contacter l\'administrateur pour réinitialiser votre mot de passe.\n\nEmail: admin@cliniquews.ma'); return false;">Mot
+                        de passe oublié ?</a>
+                </div>
+
+                <div class="error-message" id="loginError"></div>
+
+                <button type="submit" class="submit-btn" id="loginBtn">
+                    <span>Se connecter</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="form-footer">
+                <p>Pas encore de compte ? <a href="signup.html">Créer un compte</a></p>
+                <a href="../index.html" class="back-home">
+                    <i class="fas fa-arrow-left"></i> Retour à l'accueil
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/services/ApiService.js"></script>
+    <script src="../assets/js/controllers/AuthController.js?v=14"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const auth = new AuthController();
+            auth.init();
+        });
+    </script>
+</body>
+
+</html>

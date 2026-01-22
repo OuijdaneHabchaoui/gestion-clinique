@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinique WS | Excellence Médicale - Votre Santé, Notre Priorité</title>
+    <meta name="description"
+        content="Clinique WS - Centre médical pluridisciplinaire offrant 12 spécialités médicales. Soins d'excellence, équipements modernes et équipe médicale expérimentée.">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/vitrine.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ============ HERO SECTION ============ */
+        .hero-section {
+            min-height: 100vh;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.45) 0%, rgba(30, 41, 59, 0.35) 100%),
+                url('assets/images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: linear-gradient(to top, #f8fafc 0%, transparent 100%);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #ffffff, #e0f2fe);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #0ea5e9;
+        }
+
+        .hero-stat-label {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-top: 0.5rem;
+        }
+
+        /* ============ SPECIALTIES SECTION ============ */
+        .specialties-section {
+            padding: 6rem 0;
+            background: #f8fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: #64748b;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+
+        .specialty-card {
+            position: relative;
+            height: 280px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .specialty-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(14, 165, 233, 0.25);
+        }
+
+        .specialty-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .specialty-card:hover .specialty-card-bg {
+            transform: scale(1.1);
+        }
+
+        .specialty-card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.3) 0%, rgba(15, 23, 42, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .specialty-card:hover .specialty-card-overlay {
+            background: linear-gradient(180deg, rgba(14, 165, 233, 0.4) 0%, rgba(15, 23, 42, 0.95) 100%);
+        }
+
+        .specialty-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .specialty-card h3 {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .specialty-card p {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .specialty-card:hover p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============ WHY US SECTION ============ */
+        .why-us-section {
+            padding: 6rem 0;
+            background: white;
+        }
+
+        .why-us-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .why-us-image {
+            position: relative;
+        }
+
+        .why-us-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .why-us-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .why-us-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+        }
+
+        .why-us-content>p {
+            color: #64748b;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-list li:hover {
+            background: #f0f9ff;
+            transform: translateX(10px);
+        }
+
+        .feature-list .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .feature-list .text h4 {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .feature-list .text p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        /* ============ CTA SECTION ============ */
+        .cta-section {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            color: #94a3b8;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.5);
+        }
+
+        /* ============ FOOTER ============ */
+        .main-footer {
+            background: linear-gradient(to right, #0f172a, #1e3a8a);
+            padding: 4rem 0 2rem;
+            color: white;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #0ea5e9;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #0ea5e9;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1e293b;
+            padding-top: 2rem;
+            text-align: center;
+            color: #475569;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .why-us-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .specialties-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <!-- Header Navigation -->
+    <header id="mainHeader" class="main-header"
+        style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 2rem; transition: all 0.4s ease; background: transparent;">
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+            <div class="logo">
+                <a href="index.html"
+                    style="display: flex; align-items: center; gap: 10px; color: white; font-size: 1.5rem; font-weight: bold; text-decoration: none;">
+                    <i class="fas fa-heartbeat" style="font-size: 1.8rem;"></i>
+                    Clinique WS
+                </a>
+            </div>
+
+            <nav style="display: flex; gap: 2.5rem;">
+                <a href="#accueil" class="nav-link-custom">Accueil</a>
+                <a href="#specialites" class="nav-link-custom">Nos Spécialités</a>
+                <a href="#apropos" class="nav-link-custom">À Propos</a>
+                <a href="#contact" class="nav-link-custom">Contact</a>
+            </nav>
+
+            <!-- Zone dynamique Auth -->
+            <div id="headerAuthContainer">
+                <a href="pages/login.html" class="btn-header-auth">Espace Patient</a>
+            </div>
+        </div>
+    </header>
+
+    <style>
+        /* Custom Styles for Header */
+        .nav-link-custom {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0ea5e9;
+            transition: width 0.3s;
+        }
+
+        .nav-link-custom:hover {
+            color: #ffffff;
+        }
+
+        .nav-link-custom:hover::after {
+            width: 100%;
+        }
+
+        .btn-header-auth {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-header-auth:hover {
+            background: #0ea5e9;
+            border-color: #0ea5e9;
+            transform: translateY(-2px);
+        }
+
+        /* Scrolled State */
+        .header-scrolled {
+            background: rgba(15, 23, 42, 0.95) !important;
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Styles Menu Utilisateur */
+        .user-menu-container {
+            position: relative;
+        }
+
+        .user-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .user-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 120%;
+            right: 0;
+            width: 260px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            padding: 10px 0;
+            display: none;
+            flex-direction: column;
+            animation: slideDown 0.2s ease;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.active {
+            display: flex;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .dropdown-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-item {
+            padding: 10px 20px;
+            color: #475569;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .dropdown-item:hover {
+            background: #f8fafc;
+            color: #0ea5e9;
+            padding-left: 25px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #f1f5f9;
+            margin: 5px 0;
+        }
+    </style>
+
+    <script>
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+    </script>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="accueil" class="hero-section" style="padding-top: 80px;">
+        <div class="container hero-content">
+            <span class="section-badge"><i class="fas fa-heartbeat"></i> Centre Médical Pluridisciplinaire</span>
+            <h1>Votre Santé, Notre Priorité</h1>
+            <p>La Clinique WS vous offre des soins médicaux d'excellence avec 12 spécialités, une équipe de médecins
+                experts et des équipements de dernière génération.</p>
+
+            <div class="flex gap-md justify-center"
+                style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="pages/login.html" class="btn-cta" id="heroCtaBtn">
+                    <i class="fas fa-calendar-plus"></i> Prendre Rendez-vous
+                </a>
+                <a href="#specialites"
+                    style="display: inline-flex; align-items: center; gap: 0.75rem; color: white; padding: 1rem 2rem; border: 2px solid rgba(255,255,255,0.3); border-radius: 50px; text-decoration: none; transition: all 0.3s ease;">
+                    <i class="fas fa-stethoscope"></i> Découvrir nos spécialités
+                </a>
+            </div>
+
+            <!-- Stats Section with Glass Effect -->
+            <div class="hero-stats-container" style="margin-top: 4rem; display: flex; justify-content: center;">
+                <div
+                    style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 1.5rem 3rem; border-radius: 20px; display: flex; gap: 4rem; flex-wrap: wrap; justify-content: center; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+
+                    <div class="stat-item" style="text-align: center; color: white;">
+                        <i class="fas fa-user-md"
+                            style="font-size: 1.5rem; color: #38bdf8; margin-bottom: 0.5rem; display: block;"></i>
+                        <div style="font-size: 2rem; font-weight: 800; line-height: 1.2;">12</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; font-weight: 500;">Spécialités</div>
+                    </div>
+
+                    <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+
+                    <div class="stat-item" style="text-align: center; color: white;">
+                        <i class="fas fa-stethoscope"
+                            style="font-size: 1.5rem; color: #38bdf8; margin-bottom: 0.5rem; display: block;"></i>
+                        <div style="font-size: 2rem; font-weight: 800; line-height: 1.2;">25+</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; font-weight: 500;">Médecins</div>
+                    </div>
+
+                    <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+
+                    <div class="stat-item" style="text-align: center; color: white;">
+                        <i class="fas fa-smile"
+                            style="font-size: 1.5rem; color: #38bdf8; margin-bottom: 0.5rem; display: block;"></i>
+                        <div style="font-size: 2rem; font-weight: 800; line-height: 1.2;">10K+</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; font-weight: 500;">Patients</div>
+                    </div>
+
+                    <div style="width: 1px; background: rgba(255,255,255,0.2);"></div>
+
+                    <div class="stat-item" style="text-align: center; color: white;">
+                        <i class="fas fa-ambulance"
+                            style="font-size: 1.5rem; color: #ef4444; margin-bottom: 0.5rem; display: block;"></i>
+                        <div style="font-size: 2rem; font-weight: 800; line-height: 1.2;">24/7</div>
+                        <div style="font-size: 0.9rem; opacity: 0.9; font-weight: 500;">Urgences</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ ABOUT / HISTORY SECTION ============ -->
+    <section id="histoire" class="about-section" style="padding: 8rem 0; background: #fff;">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center;">
+
+                <!-- Content Side -->
+                <div class="about-content">
+                    <span class="section-badge"
+                        style="background: rgba(14, 165, 233, 0.1); color: #0ea5e9; margin-bottom: 1.5rem; display: inline-block;"><i
+                            class="fas fa-landmark"></i> Notre Héritage</span>
+                    <h2
+                        style="font-size: 2.8rem; font-weight: 800; color: #0f172a; margin-bottom: 2rem; line-height: 1.2;">
+                        Un établissement de référence pour votre santé
+                    </h2>
+
+                    <div style="margin-bottom: 2rem;">
+                        <p
+                            style="color: #475569; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; text-align: justify;">
+                            La <strong>Clinique WS</strong> est un établissement de soins pluridisciplinaire situé au
+                            centre-ville, conçu pour offrir une prise en charge médicale et chirurgicale complète. Nous
+                            regroupons au sein d'une même structure des compétences médicales de haut niveau et un
+                            plateau technique performant.
+                        </p>
+                        <p
+                            style="color: #475569; font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; text-align: justify;">
+                            Notre priorité est d'assurer la sécurité et le confort de nos patients à chaque étape de
+                            leur parcours. De l'accueil aux soins post-opératoires, nos équipes médicales et
+                            paramédicales travaillent en synergie pour garantir des diagnostics précis et des
+                            traitements efficaces, dans le strict respect des normes d'hygiène et de sécurité.
+                        </p>
+                    </div>
+
+                    <ul
+                        style="list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                        <li style="display: flex; gap: 10px; align-items: center; color: #334155; font-weight: 600;">
+                            <i class="fas fa-check-circle" style="color: #10b981;"></i> Plateau technique complet
+                        </li>
+                        <li style="display: flex; gap: 10px; align-items: center; color: #334155; font-weight: 600;">
+                            <i class="fas fa-check-circle" style="color: #10b981;"></i> Urgences assurées 24h/24
+                        </li>
+                        <li style="display: flex; gap: 10px; align-items: center; color: #334155; font-weight: 600;">
+                            <i class="fas fa-check-circle" style="color: #10b981;"></i> Normes internationales
+                        </li>
+                        <li style="display: flex; gap: 10px; align-items: center; color: #334155; font-weight: 600;">
+                            <i class="fas fa-check-circle" style="color: #10b981;"></i> Équipe pluridisciplinaire
+                        </li>
+                    </ul>
+
+                    <a href="pages/signup.html" class="btn-cta"
+                        style="margin-top: 2.5rem; padding: 0.8rem 2rem; font-size: 1rem;">
+                        Prendre un rendez-vous
+                    </a>
+                </div>
+
+                <!-- Image Side -->
+                <div class="about-image" style="position: relative;">
+                    <img src="assets/images/clinic_facade.png" alt="Architecture Moderne Clinique WS"
+                        style="width: 100%; height: 600px; object-fit: cover; border-radius: 4px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+
+                    <!-- Badge Flottant -->
+                    <div
+                        style="position: absolute; bottom: -30px; left: -30px; background: white; padding: 2rem; max-width: 280px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); border-left: 4px solid #0ea5e9;">
+                        <h4 style="color: #0f172a; font-weight: 700; margin-bottom: 0.5rem;">Certification & Qualité
+                        </h4>
+                        <p style="color: #64748b; font-size: 0.9rem; line-height: 1.5;">
+                            Premier établissement privé de la région accrédité pour ses standards de sécurité patient.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section id="specialites" class="specialties-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge"><i class="fas fa-hospital"></i> Nos Pôles d'Excellence</span>
+                <h2>12 Spécialités Médicales</h2>
+                <p>Une équipe pluridisciplinaire pour répondre à tous vos besoins de santé</p>
+            </div>
+
+            <div class="specialties-grid">
+                <!-- 1. Médecine Générale -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/medecine-generale.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-user-md"></i></div>
+                        <h3>Médecine Générale</h3>
+                        <p>Premier point de contact. Diagnostic, suivi et orientation vers les spécialistes si
+                            nécessaire.</p>
+                    </div>
+                </div>
+
+                <!-- 2. Pédiatrie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/pediatrie.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-baby"></i></div>
+                        <h3>Pédiatrie</h3>
+                        <p>Suivi des enfants, vaccinations et prise en charge des maladies infantiles.</p>
+                    </div>
+                </div>
+
+                <!-- 3. Gynécologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/gynecologie.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-venus"></i></div>
+                        <h3>Gynécologie / Obstétrique</h3>
+                        <p>Suivi des femmes, grossesse, accouchement et soins gynécologiques complets.</p>
+                    </div>
+                </div>
+
+                <!-- 4. Cardiologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/cardiologie.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-heartbeat"></i></div>
+                        <h3>Cardiologie</h3>
+                        <p>Maladies du cœur, troubles circulatoires, ECG et échographies cardiaques.</p>
+                    </div>
+                </div>
+
+                <!-- 5. Dermatologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/dermatologie.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-allergies"></i></div>
+                        <h3>Dermatologie</h3>
+                        <p>Maladies de la peau, soins esthétiques et traitement des infections cutanées.</p>
+                    </div>
+                </div>
+
+                <!-- 6. Orthopédie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('assets/images/specialites/orthopedie.png');"></div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-bone"></i></div>
+                        <h3>Orthopédie</h3>
+                        <p>Troubles osseux et articulaires, fractures et rééducation fonctionnelle.</p>
+                    </div>
+                </div>
+
+                <!-- 7. Ophtalmologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-eye"></i></div>
+                        <h3>Ophtalmologie</h3>
+                        <p>Santé des yeux, examens de la vue et chirurgie oculaire.</p>
+                    </div>
+                </div>
+
+                <!-- 8. ORL -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1606265752439-1f18756aa5fc?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-head-side-cough"></i></div>
+                        <h3>ORL</h3>
+                        <p>Maladies des oreilles, nez, gorge et troubles auditifs.</p>
+                    </div>
+                </div>
+
+                <!-- 9. Endocrinologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1579684453423-f84349ef60b0?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-disease"></i></div>
+                        <h3>Endocrinologie</h3>
+                        <p>Troubles hormonaux, diabète et maladies de la thyroïde.</p>
+                    </div>
+                </div>
+
+                <!-- 10. Radiologie -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1559757175-5700dde675bc?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-x-ray"></i></div>
+                        <h3>Radiologie / Imagerie</h3>
+                        <p>Radiographies, échographies, IRM et scanners de dernière génération.</p>
+                    </div>
+                </div>
+
+                <!-- 11. Laboratoire -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1579165466991-467135ad3110?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-vials"></i></div>
+                        <h3>Laboratoire Médical</h3>
+                        <p>Analyses biologiques : sang, urine et autres examens de laboratoire.</p>
+                    </div>
+                </div>
+
+                <!-- 12. Urgences -->
+                <div class="specialty-card">
+                    <div class="specialty-card-bg"
+                        style="background-image: url('https://images.unsplash.com/photo-1587745416684-47953f16f02f?w=600&q=80');">
+                    </div>
+                    <div class="specialty-card-overlay">
+                        <div class="specialty-icon"><i class="fas fa-ambulance"></i></div>
+                        <h3>Urgences 24/7</h3>
+                        <p>Prise en charge immédiate des accidents et situations critiques.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============ WHY US SECTION (PREMIUM LIGHT DESIGN) ============ -->
+    <section id="apropos" class="why-us-section"
+        style="position: relative; padding: 8rem 0; background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f8fafc 100%); overflow: hidden;">
+
+        <!-- Decorative Background -->
+        <div
+            style="position: absolute; top: 0; right: 0; width: 600px; height: 600px; background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%); border-radius: 50%; transform: translate(30%, -30%);">
+        </div>
+        <div
+            style="position: absolute; bottom: 0; left: 0; width: 500px; height: 500px; background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%); border-radius: 50%; transform: translate(-30%, 30%);">
+        </div>
+
+        <div class="container"
+            style="position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+
+            <!-- Section Header -->
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem auto;">
+                <div
+                    style="display: inline-block; background: linear-gradient(135deg, #0ea5e9, #06b6d4); padding: 0.5rem 1.5rem; border-radius: 50px; margin-bottom: 1.5rem;">
+                    <span style="color: white; font-weight: 600; font-size: 0.9rem; letter-spacing: 1px;">
+                        <i class="fas fa-award"></i> NOTRE ENGAGEMENT
+                    </span>
+                </div>
+                <h2
+                    style="font-size: 3.5rem; font-weight: 800; color: #0f172a; margin-bottom: 1.5rem; line-height: 1.1;">
+                    Pourquoi Choisir <br>
+                    <span
+                        style="background: linear-gradient(135deg, #0ea5e9, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Clinique
+                        WS</span> ?
+                </h2>
+                <p style="font-size: 1.2rem; color: #475569; line-height: 1.8;">
+                    Une excellence médicale reconnue, des équipements de pointe et une approche humaine qui placent
+                    votre santé au centre de nos priorités.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem; margin-bottom: 4rem;">
+
+                <!-- Card 1: Expertise -->
+                <div class="feature-card-light"
+                    style="background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent); border-radius: 0 24px 0 100%;">
+                    </div>
+                    <div
+                        style="width: 80px; height: 80px; background: linear-gradient(135deg, #0ea5e9, #06b6d4); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3); position: relative; z-index: 1;">
+                        <i class="fas fa-user-md" style="font-size: 2rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.6rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem;">Expertise
+                        Médicale</h3>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 1.05rem;">Plus de 25 médecins spécialistes
+                        certifiés, sélectionnés pour leur excellence et leur engagement envers vos soins.</p>
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #f1f5f9;">
+                        <span style="color: #0ea5e9; font-weight: 700; font-size: 2rem;">25+</span>
+                        <span style="color: #94a3b8; margin-left: 0.5rem;">Médecins Experts</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Technology -->
+                <div class="feature-card-light"
+                    style="background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), transparent); border-radius: 0 24px 0 100%;">
+                    </div>
+                    <div
+                        style="width: 80px; height: 80px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3); position: relative; z-index: 1;">
+                        <i class="fas fa-microscope" style="font-size: 2rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.6rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem;">Technologie
+                        Avancée</h3>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 1.05rem;">Équipements médicaux de dernière
+                        génération pour des diagnostics ultra-précis et des traitements efficaces.</p>
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #f1f5f9;">
+                        <span style="color: #8b5cf6; font-weight: 700; font-size: 2rem;">100%</span>
+                        <span style="color: #94a3b8; margin-left: 0.5rem;">Équipements Modernes</span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Care -->
+                <div class="feature-card-light"
+                    style="background: white; padding: 3rem; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden;">
+                    <div
+                        style="position: absolute; top: 0; right: 0; width: 150px; height: 150px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), transparent); border-radius: 0 24px 0 100%;">
+                    </div>
+                    <div
+                        style="width: 80px; height: 80px; background: linear-gradient(135deg, #10b981, #059669); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3); position: relative; z-index: 1;">
+                        <i class="fas fa-heart" style="font-size: 2rem; color: white;"></i>
+                    </div>
+                    <h3 style="font-size: 1.6rem; font-weight: 700; color: #0f172a; margin-bottom: 1rem;">Approche
+                        Humaine</h3>
+                    <p style="color: #64748b; line-height: 1.7; font-size: 1.05rem;">Un suivi personnalisé et
+                        bienveillant. Chaque patient bénéficie d'une écoute attentive et de soins adaptés.</p>
+                    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid #f1f5f9;">
+                        <span style="color: #10b981; font-weight: 700; font-size: 2rem;">98%</span>
+                        <span style="color: #94a3b8; margin-left: 0.5rem;">Satisfaction Patients</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trust Badges -->
+            <div
+                style="background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 2rem;">
+                <div style="text-align: center;">
+                    <i class="fas fa-certificate" style="font-size: 2.5rem; color: #0ea5e9; margin-bottom: 0.5rem;"></i>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Certifié ISO 9001</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Qualité Garantie</div>
+                </div>
+                <div style="width: 1px; height: 60px; background: #e2e8f0;"></div>
+                <div style="text-align: center;">
+                    <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 0.5rem;"></i>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Sécurité Maximale</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Données Protégées</div>
+                </div>
+                <div style="width: 1px; height: 60px; background: #e2e8f0;"></div>
+                <div style="text-align: center;">
+                    <i class="fas fa-clock" style="font-size: 2.5rem; color: #10b981; margin-bottom: 0.5rem;"></i>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Urgences 24/7</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Toujours Disponibles</div>
+                </div>
+                <div style="width: 1px; height: 60px; background: #e2e8f0;"></div>
+                <div style="text-align: center;">
+                    <i class="fas fa-award" style="font-size: 2.5rem; color: #f59e0b; margin-bottom: 0.5rem;"></i>
+                    <div style="font-weight: 700; color: #0f172a; font-size: 1.1rem;">Prix d'Excellence</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;">Reconnus Nationalement</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Hover Effects Script -->
+    <script>
+        document.querySelectorAll('.feature-card-light').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-15px) scale(1.02)';
+                card.style.boxShadow = '0 25px 60px rgba(0,0,0,0.15)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+                card.style.boxShadow = '0 10px 40px rgba(0,0,0,0.08)';
+            });
+        });
+    </script>
+    </div>
+    </div>
+
+    <!-- ============ TESTIMONIALS SECTION ============ -->
+    <section id="temoignages" class="testimonials-section" style="padding: 6rem 0; background: #f8fafc;">
+        <div class="container">
+            <div class="section-header" style="text-align: center; margin-bottom: 4rem;">
+                <span class="section-badge"><i class="fas fa-comment-medical"></i> Avis Patients</span>
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: #0f172a; margin: 1rem 0;">Ce que disent nos
+                    patients</h2>
+                <p style="color: #64748b; font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+                    La confiance de nos patients est notre plus grande récompense. Découvrez leurs expériences à la
+                    Clinique WS.
+                </p>
+            </div>
+
+            <div class="testimonials-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Témoignage 1 -->
+                <div class="testimonial-card"
+                    style="background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;">
+                    <i class="fas fa-quote-right"
+                        style="position: absolute; top: 30px; right: 30px; font-size: 2rem; color: rgba(14, 165, 233, 0.1);"></i>
+                    <div style="display: flex; gap: 5px; color: #f59e0b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p
+                        style="color: #475569; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+                        "Une prise en charge exceptionnelle du début à la fin. Les médecins sont à l'écoute et le
+                        personnel infirmier est d'une grande gentillesse. Je recommande vivement !"
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: #e0f2fe; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #0ea5e9; font-weight: 700;">
+                            SA</div>
+                        <div>
+                            <div style="font-weight: 700; color: #0f172a;">Samira A.</div>
+                            <div style="font-size: 0.85rem; color: #94a3b8;">Patiente Cardiologie</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Témoignage 2 -->
+                <div class="testimonial-card"
+                    style="background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;">
+                    <i class="fas fa-quote-right"
+                        style="position: absolute; top: 30px; right: 30px; font-size: 2rem; color: rgba(14, 165, 233, 0.1);"></i>
+                    <div style="display: flex; gap: 5px; color: #f59e0b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p
+                        style="color: #475569; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+                        "J'ai été opéré au service d'orthopédie. Tout s'est parfaitement déroulé, la chambre était très
+                        confortable et le suivi post-opératoire très rigoureux."
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #10b981; font-weight: 700;">
+                            KM</div>
+                        <div>
+                            <div style="font-weight: 700; color: #0f172a;">Karim M.</div>
+                            <div style="font-size: 0.85rem; color: #94a3b8;">Patient Orthopédie</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Témoignage 3 -->
+                <div class="testimonial-card"
+                    style="background: white; padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative;">
+                    <i class="fas fa-quote-right"
+                        style="position: absolute; top: 30px; right: 30px; font-size: 2rem; color: rgba(14, 165, 233, 0.1);"></i>
+                    <div style="display: flex; gap: 5px; color: #f59e0b; margin-bottom: 1.5rem;">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p
+                        style="color: #475569; font-size: 1.05rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+                        "Le service pédiatrie est formidable. Le Dr. Bennani a su rassurer mon fils de 5 ans. L'espace
+                        d'attente est aussi très bien aménagé pour les enfants."
+                    </p>
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div
+                            style="width: 50px; height: 50px; background: #fdf2f8; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #db2777; font-weight: 700;">
+                            LH</div>
+                        <div>
+                            <div style="font-weight: 700; color: #0f172a;">Leila H.</div>
+                            <div style="font-size: 0.85rem; color: #94a3b8;">Maman Patiente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ CTA SECTION ============ -->
+    <section class="cta-section"
+        style="background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); position: relative; overflow: hidden; padding: 6rem 0;">
+        <!-- Éléments Décoratifs -->
+        <div
+            style="position: absolute; top: -100px; left: -100px; width: 300px; height: 300px; background: rgba(255,255,255,0.1); border-radius: 50%;">
+        </div>
+        <div
+            style="position: absolute; bottom: -50px; right: -50px; width: 400px; height: 400px; background: rgba(255,255,255,0.05); border-radius: 50%;">
+        </div>
+
+        <div class="container cta-content" style="position: relative; z-index: 1;">
+            <h2
+                style="font-size: 3rem; font-weight: 800; margin-bottom: 1.5rem; text-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                Votre santé n'attend pas</h2>
+            <p style="font-size: 1.25rem; color: #ecfeff; max-width: 700px; margin: 0 auto 3rem; line-height: 1.6;">
+                Rejoignez nos patients satisfaits et bénéficiez d'une prise en charge rapide et personnalisée. Prenez le
+                contrôle de votre santé dès aujourd'hui.
+            </p>
+
+            <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="pages/signup.html" class="btn-cta"
+                    style="background: white; color: #0891b2; border: none; padding: 1.2rem 3rem; font-size: 1.1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); transform: translateY(0); transition: all 0.3s; font-weight: 700;">
+                    <i class="fas fa-calendar-alt"></i> Prendre Rendez-vous
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer id="contact" class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
+                        <div
+                            style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9, #06b6d4); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <span style="font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px;">Clinique WS</span>
+                    </div>
+                    <p style="color: #94a3b8; line-height: 1.6; margin-bottom: 1.5rem;">
+                        L'excellence médicale au service de votre santé. Une prise en charge humaine, des technologies
+                        de pointe et une équipe dévouée à votre bien-être.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Nos Spécialités</h3>
+                    <ul class="footer-links">
+                        <li><a href="#specialites">Médecine Générale</a></li>
+                        <li><a href="#specialites">Cardiologie & Pédiatrie</a></li>
+                        <li><a href="#specialites">Gynécologie & Obstétrique</a></li>
+                        <li><a href="#specialites">Dermatologie & Orthopédie</a></li>
+                        <li><a href="#specialites">Ophtalmologie & ORL</a></li>
+                        <li><a href="#specialites">Radiologie & Laboratoire</a></li>
+                        <li><a href="#specialites" style="color: #fca5a5; font-weight: bold;">Urgences 24/7</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="pages/signup.html">Créer un compte</a></li>
+                        <li><a href="pages/login.html">Espace Patient</a></li>
+                        <li><a href="pages/login.html">Espace Médecin</a></li>
+                        <li><a href="#apropos">À propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Contact & Horaires</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt" style="color: #38bdf8;"></i> 123 Avenue Mohamed V,
+                            Casablanca</li>
+                        <li><i class="fas fa-phone" style="color: #38bdf8;"></i> +212 5 22 00 00 00</li>
+                        <li><i class="fas fa-envelope" style="color: #38bdf8;"></i> contact@cliniquews.ma</li>
+                        <li style="margin-top: 1.5rem; display: flex; align-items: center; gap: 15px;">
+                            <div
+                                style="background: #10b981; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);">
+                                <i class="fas fa-clock" style="color: white; font-size: 1.2rem;"></i>
+                            </div>
+                            <div>
+                                <div
+                                    style="font-weight: 800; color: white; font-size: 1.2rem; letter-spacing: 0.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                                    OUVERT 24H/24</div>
+                                <div style="font-size: 0.9rem; color: #6ee7b7; font-weight: 500;">7j/7 - Urgences &
+                                    Soins</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Clinique WS. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/services/ApiService.js"></script>
+    <script src="assets/js/controllers/HomeController.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const home = new HomeController();
+            home.init();
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

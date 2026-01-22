@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Clinique WS</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css?v=2026">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ============ PROFILE PAGE STYLES ============ */
+        .profile-page {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Profile Header Card */
+        .profile-header {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            font-weight: 600;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .avatar-upload-btn {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 36px;
+            height: 36px;
+            background: white;
+            color: #0ea5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .avatar-upload-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-role {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-meta {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+
+        .profile-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .profile-meta-item i {
+            opacity: 0.8;
+        }
+
+        /* Form Cards */
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .profile-card-header {
+            background: #f8fafc;
+            padding: 20px 24px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-card-header i {
+            color: #0ea5e9;
+            font-size: 1.2rem;
+        }
+
+        .profile-card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .profile-card-body {
+            padding: 24px;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-grid .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            background: #f8fafc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #0ea5e9;
+            background: white;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-group input:disabled {
+            background: #f1f5f9;
+            color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Buttons */
+        .btn-save {
+            background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn-password {
+            background: #f1f5f9;
+            color: #475569;
+            border: 2px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-password:hover {
+            background: #e2e8f0;
+            border-color: #cbd5e1;
+        }
+
+        /* Actions Footer */
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 24px;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-header {
+                padding: 30px 20px;
+            }
+
+            .profile-meta {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i class="fas fa-heartbeat"></i></div>
+                <h1>Clinique WS</h1>
+            </div>
+            <nav class="sidebar-menu" id="sidebarMenu">
+                <!-- Menu généré par JS -->
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="btnLogout" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h2>Mon Profil</h2>
+                </div>
+                <div class="user-nav">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="headerAvatar">U</div>
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Chargement...</span>
+                            <span class="user-role" id="headerUserRole">...</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div id="alertMessage" class="alert hidden"></div>
+
+                <div class="profile-page">
+                    <!-- Profile Header -->
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            <span id="avatarInitial">?</span>
+                            <label for="photoUpload" class="avatar-upload-btn" title="Changer la photo">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="photoUpload" hidden accept="image/*">
+                        </div>
+                        <h1 class="profile-name" id="fullName">Chargement...</h1>
+                        <span class="profile-role" id="roleBadge">...</span>
+
+                        <div class="profile-meta">
+                            <div class="profile-meta-item">
+                                <i class="fas fa-envelope"></i>
+                                <span id="displayEmail">...</span>
+                            </div>
+                            <div class="profile-meta-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Membre depuis <strong id="memberSince">...</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Personal Information Card -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-user-edit"></i>
+                            <h3>Informations Personnelles</h3>
+                        </div>
+                        <div class="profile-card-body">
+                            <form id="profileForm">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="nom">Nom</label>
+                                        <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenom">Prénom</label>
+                                        <input type="text" id="prenom" name="prenom" placeholder="Votre prénom"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" name="email" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="telephone">Téléphone</label>
+                                        <input type="tel" id="telephone" name="telephone" placeholder="0600000000">
+                                    </div>
+
+                                    <!-- Dynamic fields injected by JS -->
+                                    <div id="specificFields" class="form-grid full-width"></div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-save" id="btnSave">
+                                        <i class="fas fa-check"></i>
+                                        Enregistrer les modifications
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Password Change Card -->
+                    <div class="profile-card">
+                        <div class="profile-card-header">
+                            <i class="fas fa-lock"></i>
+                            <h3>Sécurité du Compte</h3>
+                        </div>
+                        <div class="profile-card-body">
+                            <form id="passwordForm">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="newPassword">Nouveau mot de passe</label>
+                                        <input type="password" id="newPassword" name="newPassword"
+                                            placeholder="••••••••" minlength="6">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirmer le mot de passe</label>
+                                        <input type="password" id="confirmPassword" name="confirmPassword"
+                                            placeholder="••••••••">
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-password">
+                                        <i class="fas fa-key"></i>
+                                        Mettre à jour le mot de passe
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/services/ApiService.js?v=3"></script>
+    <script src="../assets/js/controllers/ProfileController.js?v=3"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const profile = new ProfileController();
+            profile.init();
+        });
+    </script>
+</body>
+
+</html>

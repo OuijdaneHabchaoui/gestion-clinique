@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Utilisateurs - Clinique WS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css?v=2026">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .role-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .role-admin {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .role-medecin {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .role-patient {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .status-actif {
+            color: #16a34a;
+        }
+
+        .status-inactif {
+            color: #dc2626;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i class="fas fa-heartbeat"></i></div>
+                <h1>Clinique WS</h1>
+            </div>
+            <nav class="sidebar-menu" id="sidebarMenu">
+                <!-- Menu généré par JS -->
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="btnLogout" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h2>Gestion des Utilisateurs</h2>
+                </div>
+                <div class="user-nav">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="headerAvatar">A</div>
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Admin</span>
+                            <span class="user-role" id="headerUserRole">admin</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div id="alertMessage" class="hidden"></div>
+
+                <div class="flex justify-between items-center mb-xl">
+                    <div class="flex gap-md">
+                        <button class="btn btn-primary" onclick="controller.openNewUserModal()">
+                            <i class="fas fa-plus mr-sm"></i> Nouvel Utilisateur
+                        </button>
+                        <select id="roleFilter" class="form-input" style="width: auto;">
+                            <option value="">Tous les rôles</option>
+                            <option value="admin">Admin</option>
+                            <option value="medecin">Médecin</option>
+                            <option value="patient">Patient</option>
+                        </select>
+                    </div>
+                    <div class="search-bar" style="background: white; padding: 0.5rem 1rem; border-radius: 0.5rem;">
+                        <i class="fas fa-search text-muted"></i>
+                        <input type="text" id="searchInput" placeholder="Rechercher un utilisateur..."
+                            style="border: none; outline: none;">
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <div class="section-content p-0">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom Complet</th>
+                                    <th>Email</th>
+                                    <th>Rôle</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-xl">Chargement...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Nouvel Utilisateur -->
+    <div class="modal" id="newUserModal">
+        <div class="modal-content" style="max-height: 85vh; overflow-y: auto;">
+            <div class="section-header mb-xl"
+                style="display: flex; justify-content: space-between; align-items: center;">
+                <h3>Nouvel Utilisateur</h3>
+                <button class="btn-icon" onclick="document.getElementById('newUserModal').style.display='none'"><i
+                        class="fas fa-times"></i></button>
+            </div>
+
+            <form id="newUserForm">
+                <div class="form-group mb-md">
+                    <label class="form-label">Rôle</label>
+                    <select name="role" class="form-input" required id="newRoleSelect">
+                        <option value="admin">Administrateur</option>
+                        <option value="medecin">Médecin</option>
+                        <!-- Patient se crée lui-même, mais admin peut le faire -->
+                        <option value="patient">Patient</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-2 gap-md mb-md">
+                    <div class="form-group">
+                        <label class="form-label">Nom</label>
+                        <input type="text" name="nom" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Prénom</label>
+                        <input type="text" name="prenom" class="form-input">
+                    </div>
+                </div>
+
+                <div class="form-group mb-md">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-input" required>
+                </div>
+
+                <div class="form-group mb-xl">
+                    <label class="form-label">Mot de passe</label>
+                    <input type="password" name="mot_de_passe" class="form-input" required minlength="6">
+                </div>
+
+                <div id="medecinFields" class="form-group mb-xl hidden">
+                    <label class="form-label">Spécialité</label>
+                    <select name="specialite" class="form-input">
+                        <option value="">Sélectionner une spécialité</option>
+                        <option value="Médecine Générale">Médecine Générale</option>
+                        <option value="Cardiologie">Cardiologie</option>
+                        <option value="Dermatologie">Dermatologie</option>
+                        <option value="Pédiatrie">Pédiatrie</option>
+                        <option value="Gynécologie">Gynécologie</option>
+                        <option value="Ophtalmologie">Ophtalmologie</option>
+                        <option value="Dentiste">Dentiste</option>
+                        <option value="Neurologie">Neurologie</option>
+                        <option value="Psychiatrie">Psychiatrie</option>
+                        <option value="Orthopédie">Orthopédie</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+
+                <!-- Champs spécifiques Patient -->
+                <div id="patientFields" class="form-group mb-xl hidden">
+                    <div class="form-group mb-md">
+                        <label class="form-label">Adresse</label>
+                        <input type="text" name="adresse" class="form-input">
+                    </div>
+                    <label class="form-label">Groupe Sanguin</label>
+                    <select name="groupe_sanguin" class="form-input">
+                        <option value="">Sélectionner...</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Créer le compte</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/services/ApiService.js?v=2"></script>
+    <script>
+        class UtilisateursController {
+            constructor() {
+                this.user = api.getCurrentUser();
+                if (!this.user || this.user.role !== 'admin') {
+                    this.showAlert('Accès réservé aux administrateurs', 'error');
+                    setTimeout(() => window.location.href = 'dashboard.html', 1500);
+                    return;
+                }
+                this.users = [];
+                this.init();
+            }
+
+            async init() {
+                this.renderMenu();
+                this.updateHeader();
+                await this.loadUsers();
+                this.attachEvents();
+                // Gestion affichage conditionnel spécialité et groupe sanguin
+                document.getElementById('newRoleSelect').addEventListener('change', (e) => {
+                    const medFields = document.getElementById('medecinFields');
+                    const patFields = document.getElementById('patientFields');
+
+                    medFields.classList.add('hidden');
+                    medFields.style.display = 'none';
+                    patFields.classList.add('hidden');
+                    patFields.style.display = 'none';
+
+                    if (e.target.value === 'medecin') {
+                        medFields.classList.remove('hidden');
+                        medFields.style.display = 'block';
+                    } else if (e.target.value === 'patient') {
+                        patFields.classList.remove('hidden');
+                        patFields.style.display = 'block';
+                    }
+                });
+                // Initial hide
+                document.getElementById('medecinFields').style.display = 'none';
+                document.getElementById('patientFields').style.display = 'none';
+            }
+
+            renderMenu() {
+                const menuContainer = document.getElementById('sidebarMenu');
+                if (!menuContainer) return;
+
+                let html = `
+                    <a href="dashboard.html" class="menu-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                    <a href="patients.html" class="menu-item">
+                        <i class="fas fa-users"></i>
+                        <span>Patients</span>
+                    </a>
+                    <a href="medecins.html" class="menu-item">
+                        <i class="fas fa-user-md"></i>
+                        <span>Médecins</span>
+                    </a>
+                    <a href="rendez-vous.html" class="menu-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Rendez-vous</span>
+                    </a>
+                    <a href="utilisateurs.html" class="menu-item active">
+                        <i class="fas fa-user-shield"></i>
+                        <span>Utilisateurs</span>
+                    </a>
+                `;
+
+                menuContainer.innerHTML = html;
+            }
+
+            openNewUserModal() {
+                document.getElementById('newUserModal').style.display = 'flex';
+                document.getElementById('newUserForm').reset();
+            }
+
+            updateHeader() {
+                const name = this.user.nom || this.user.email.split('@')[0];
+                document.getElementById('headerUserName').textContent = name;
+                document.getElementById('headerUserRole').textContent = this.user.role;
+                document.getElementById('headerAvatar').textContent = name.charAt(0).toUpperCase();
+            }
+
+            async loadUsers() {
+                try {
+                    const response = await api.getUsers();
+                    if (response.success) {
+                        this.users = response.data;
+                        this.renderTable(this.users);
+                    } else {
+                        this.showAlert('Erreur: ' + response.message, 'error');
+                        // Show empty table logic or retry
+                        this.renderTable([]);
+                    }
+                } catch (error) {
+                    console.error('Erreur chargement utilisateurs:', error);
+                    this.showAlert('Erreur technique: ' + error.message, 'error');
+                }
+            }
+
+            renderTable(users) {
+                const tbody = document.getElementById('usersTableBody');
+
+                if (!users || users.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">Aucun utilisateur trouvé</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = users.map(u => {
+                    // Essayer de trouver le nom complet si disponible (nécessite jointure backend ou déduction)
+                    // Ici on utilise l'email ou un champ fictif
+                    const displayName = u.nom ? `${u.nom} ${u.prenom || ''}` : 'Utilisateur'; // Simplification
+                    return `
+                    <tr>
+                        <td>#${u.id}</td>
+                        <td><strong>${displayName}</strong></td>
+                        <td>${u.email}</td>
+                        <td><span class="role-badge role-${u.role}">${u.role}</span></td>
+                        <td>
+                            <span class="${u.actif ? 'status-actif' : 'status-inactif'}">
+                                <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+                                ${u.actif ? 'Actif' : 'Inactif'}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn-icon" onclick="controller.toggleStatus(${u.id}, ${u.actif})" title="${u.actif ? 'Désactiver' : 'Activer'}">
+                                <i class="fas fa-${u.actif ? 'ban' : 'check'}"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `}).join('');
+            }
+
+            async toggleStatus(id, currentStatus) {
+                if (id === this.user.id) {
+                    this.showAlert('Vous ne pouvez pas modifier votre propre compte', 'error');
+                    return;
+                }
+
+                try {
+                    const newStatus = currentStatus ? 0 : 1;
+                    await api.updateUser(id, { actif: newStatus, auth_user_id: this.user.id });
+                    this.loadUsers();
+                } catch (error) {
+                    this.showAlert('Erreur: ' + error.message, 'error');
+                }
+            }
+
+            attachEvents() {
+                document.getElementById('btnLogout').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    api.logout();
+                });
+
+                // Création Utilisateur avec Profil lié
+                document.getElementById('newUserForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target);
+                    const data = Object.fromEntries(formData.entries());
+
+                    try {
+                        // 1. Création du Compte Utilisateur (Login)
+                        data.auth_user_id = this.user.id; // Pour sécu admin
+                        const resUser = await api.createUser(data);
+
+                        if (resUser.success && resUser.data && resUser.data.id) {
+                            const newUserId = resUser.data.id;
+
+                            // 2. Création du Profil associé (Médecin ou Patient)
+                            if (data.role === 'medecin') {
+                                const medecinData = {
+                                    nom: data.nom,
+                                    prenom: data.prenom,
+                                    specialite: data.specialite,
+                                    telephone: '', // Pas de champ tel dans ce form, mais on pourrait l'ajouter
+                                    user_id: newUserId // Important: lier au nouveau user
+                                };
+                                // Utilisation de l'endpoint direct ou via api.request
+                                await api.request('entity=medecins&action=post', {
+                                    method: 'POST',
+                                    body: medecinData
+                                });
+
+                            } else if (data.role === 'patient') {
+                                const patientData = {
+                                    nom: data.nom,
+                                    prenom: data.prenom,
+                                    date_naissance: '', // Non demandé
+                                    telephone: '',
+                                    adresse: data.adresse,
+                                    groupe_sanguin: data.groupe_sanguin,
+                                    user_id: newUserId
+                                };
+                                await api.request('entity=patients&action=post', {
+                                    method: 'POST',
+                                    body: patientData
+                                });
+                            }
+
+                            this.showAlert('✅ Utilisateur et profil créés avec succès !', 'success');
+                            document.getElementById('newUserModal').style.display = 'none';
+                            this.loadUsers();
+                        } else {
+                            throw new Error(resUser.message || 'Erreur inconnue lors de la création');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        this.showAlert('❌ ' + err.message, 'error');
+                    }
+                });
+
+                // Filtre par rôle
+                document.getElementById('roleFilter').addEventListener('change', (e) => {
+                    const role = e.target.value;
+                    if (role) {
+                        this.renderTable(this.users.filter(u => u.role === role));
+                    } else {
+                        this.renderTable(this.users);
+                    }
+                });
+
+                // Recherche
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    const search = e.target.value.toLowerCase();
+                    this.renderTable(this.users.filter(u =>
+                        (u.email && u.email.toLowerCase().includes(search)) ||
+                        (u.nom && u.nom.toLowerCase().includes(search)) ||
+                        (u.prenom && u.prenom.toLowerCase().includes(search))
+                    ));
+                });
+            }
+
+            showAlert(message, type = 'error') {
+                const alertDiv = document.getElementById('alertMessage');
+                if (!alertDiv) return;
+
+                const isSuccess = type === 'success';
+                alertDiv.innerHTML = `<i class="fas fa-${isSuccess ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+                alertDiv.className = `alert alert-${type}`;
+                alertDiv.style.cssText = `
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 16px 20px;
+                    border-radius: 12px;
+                    margin-bottom: 20px;
+                    font-weight: 500;
+                    background: ${isSuccess ? 'rgba(16, 185, 129, 0.15)' : 'rgba(239, 68, 68, 0.15)'};
+                    border: 1px solid ${isSuccess ? 'rgba(16, 185, 129, 0.3)' : 'rgba(239, 68, 68, 0.3)'};
+                    color: ${isSuccess ? '#10b981' : '#ef4444'};
+                `;
+
+                setTimeout(() => { alertDiv.style.display = 'none'; }, 5000);
+            }
+        }
+
+        const controller = new UtilisateursController();
+    </script>
+</body>
+
+</html>

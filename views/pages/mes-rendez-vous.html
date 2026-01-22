@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Rendez-vous - Clinique WS</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css?v=2026">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Styles pour la modal */
+
+        /* Styles de modal déplacés dans dashboard.css */
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: #1f2937;
+        }
+
+        .close-modal {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #9ca3af;
+            transition: color 0.2s;
+        }
+
+        .close-modal:hover {
+            color: #ef4444;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-success {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .badge-error {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .badge-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .badge {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo"><i class="fas fa-heartbeat"></i></div>
+                <h1>Clinique WS</h1>
+            </div>
+            <nav class="sidebar-menu" id="sidebarMenu">
+                <!-- Menu généré par JS -->
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="sidebarLogout" class="menu-item">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h2>Mes Rendez-vous</h2>
+                </div>
+                <div class="user-nav">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="headerAvatar">P</div>
+                        <div class="user-info">
+                            <span class="user-name" id="headerUserName">Patient</span>
+                            <span class="user-role" id="headerUserRole">patient</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-wrapper">
+                <div id="alertMessage" class="hidden"></div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <div>
+                        <p class="text-muted">Historique et rendez-vous à venir</p>
+                    </div>
+                    <button id="btnNewRdv" class="btn btn-primary">
+                        <i class="fas fa-plus mr-sm"></i> Nouveau Rendez-vous
+                    </button>
+                </div>
+
+                <div class="card-section">
+                    <div class="section-content p-0">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date & Heure</th>
+                                    <th>Patient</th>
+                                    <th>Médecin</th>
+                                    <th>Spécialité</th>
+                                    <th>Motif</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rdvTableBody">
+                                <tr>
+                                    <td colspan="6" class="text-center py-xl">Chargement...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Nouveau RDV -->
+    <div id="rdvModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-height: 85vh; overflow-y: auto;">
+            <div class="modal-header">
+                <h2>Demander un Rendez-vous</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="rdvForm">
+                    <input type="hidden" name="patient_id" id="rdvPatientId">
+
+                    <div class="form-group">
+                        <label class="form-label">Médecin *</label>
+                        <select name="medecin_id" id="medecinSelect" class="form-select" required>
+                            <option value="">Chargement des médecins...</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Date et Heure souhaitée *</label>
+                        <input type="datetime-local" name="date_rendez_vous" id="dateRendezVous" class="form-input"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Type de consultation *</label>
+                        <select name="type_consultation" class="form-select" required>
+                            <option value="medecine_generale">Médecine Générale</option>
+                            <option value="pediatrie">Pédiatrie</option>
+                            <option value="gynecologie">Gynécologie</option>
+                            <option value="cardiologie">Cardiologie</option>
+                            <option value="dermatologie">Dermatologie</option>
+                            <option value="orl">ORL</option>
+                            <option value="ophtalmologie">Ophtalmologie</option>
+                            <option value="radiologie">Radiologie</option>
+                            <option value="laboratoire">Laboratoire</option>
+                            <option value="orthopedie">Orthopédie</option>
+                            <option value="nutrition">Nutrition</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Prix estimé (DH)</label>
+                        <input type="number" name="prix" class="form-input" value="300" min="0" readonly
+                            style="background: #f1f5f9; cursor: not-allowed;">
+                        <small style="color: #94a3b8; font-size: 0.75rem;">Le prix final sera confirmé par la
+                            clinique</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Motif de consultation *</label>
+                        <textarea name="motif" class="form-textarea" rows="3"
+                            placeholder="Ex: Douleurs à l'estomac, contrôle annuel..." required></textarea>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+                        <button type="button" class="btn btn-secondary close-modal-btn">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Envoyer la demande</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/services/ApiService.js?v=2"></script>
+    <script src="../assets/js/controllers/MesRendezVousController.js?v=2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new MesRendezVousController();
+        });
+    </script>
+</body>
+
+</html>
